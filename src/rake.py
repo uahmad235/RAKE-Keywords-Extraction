@@ -28,14 +28,11 @@ class RAKE(object):
 		self.calculate_final_scores()
 
 		return self.cnt_phrases_weight.most_common(int(len(self.splitted)*0.30))
-		# return self.cnt_phrases_weight
-
 
 	@staticmethod
 	def split_phrase(phrase): 
 		""" split the phrase into space separated tokens """
 		return re.split(r'[ ]',phrase)
-
 
 	def create_cooccurance_matrix(self):
 		""" creates cooccurance matrix for terms occuring in same phrase"""
@@ -48,7 +45,6 @@ class RAKE(object):
 					w1, w2 = phrase_tokens[i], phrase_tokens[j]
 					self.com[w1][w2] += 1
 
-
 	def split_phrases_into_tokens(self):
 		""" splits phrases into individual tokens i.e.,
 			convert phrases into list of tokens for matching occurance
@@ -59,7 +55,6 @@ class RAKE(object):
 							for token in phrase.split(' ') 
 							if token.strip()!=0]
 	
-
 	def update_cooccurance_matrix(self):
 		""" updates cooccurance matrix by converting text """
 		for x in self.splitted:
@@ -74,14 +69,12 @@ class RAKE(object):
 
 		for k in list(self.com):  # key of outer dict i.e., first word of phrase 
 			for x in self.com[k]:    # all kvp's against first element
-				# print(k,x,com[k][x]) 
 				if k == x:      # if same word 
 					self.cnt_freq[k] = self.com[k][x]
 
 				self.cnt_degree[k] += (self.com[k][x])
 				if self.com[k][x] != self.com[x][k]:
 					self.cnt_degree[k] += self.com[x][k]
-
 
 	def calculate_weights(self):
 		""" calculate weights of all candidate words """
@@ -91,7 +84,6 @@ class RAKE(object):
 					self.cnt_freq[word] = 0.1
 				self.cnt_Weight[word] = self.cnt_degree[word] / self.cnt_freq[word]
 
-
 	def calculate_final_scores(self):
 		""" count final score for each phrase """
 		for phrase in self.phrases:
@@ -99,8 +91,4 @@ class RAKE(object):
 			for word in words:
 				# add the individual weight of all words in phrase
 				self.cnt_phrases_weight[phrase] += self.cnt_Weight[word]
-
-				# for selected_keywords,v in :
-					# print(selected_keywords,'  ',v) 
-
 

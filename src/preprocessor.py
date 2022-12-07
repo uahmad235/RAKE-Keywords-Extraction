@@ -30,14 +30,8 @@ class Preprocess(object):
 
 		return pattern
 
-		# text
 	def text_to_phrases(self):
 		""" returns phrases into stopwords-separated tokens """
-		cur_dir = (os.path.abspath(os.curdir))
-		# next_dir = "//datas//textfile.txt"
-		# joined_path = os.path.join(cur_dir, "RAKE","datas","FoxStoplist.txt")
-		# print(joined_path)
-
 		stoplist = Preprocess.read_stopwords(self.stop_path)
 		pattern = Preprocess.compile_pattern_for_phrases(stoplist)
 
